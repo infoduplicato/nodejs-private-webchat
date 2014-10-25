@@ -291,27 +291,38 @@ $(function(){
 		}
 
 		else if(status === "youStartedChatWithNoMessages") {
+            var len = data.users.length;
+                img = data.avatars[len-1],
+                message = data.users[len-1] + " has joined this chat.";
 
 			left.fadeOut(1200, function() {
 				inviteSomebody.fadeOut(1200,function(){
-					noMessages.fadeIn(1200);
+                    createChatMessage(message,data.user,img,moment());
+
+					//noMessages.fadeIn(1200);
 					footer.fadeIn(1200);
 				});
 			});
 
 			friend = data.users[1];
-			noMessagesImage.attr("src",data.avatars[1]);
+			//noMessagesImage.attr("src",data.avatars[1]);
+            scrollToBottom();
 		}
 
 		else if(status === "heStartedChatWithNoMessages") {
 
+            var img = data.avatars[0],
+                message = data.users[0] + " chatting with you!";
+
 			personInside.fadeOut(1200,function(){
-				noMessages.fadeIn(1200);
+				//noMessages.fadeIn(1200);
+                createChatMessage(message,data.users[0],img,moment());
 				footer.fadeIn(1200);
 			});
 
 			friend = data.users[0];
-			noMessagesImage.attr("src",data.avatars[0]);
+			//noMessagesImage.attr("src",data.avatars[0]);
+            scrollToBottom();
 		}
 
 		else if(status === "chatStarted"){
@@ -322,12 +333,15 @@ $(function(){
 
 		else if(status === "somebodyLeft"){
 
-			leftImage.attr("src",data.avatar);
-			leftNickname.text(data.user);
+			var img = data.avatar,
+                message = data.user + " has left this chat.";
 
-			section.children().css('display','none');
-			footer.css('display', 'none');
-			left.fadeIn(1200);
+			//section.children().css('display','none');
+			//footer.css('display', 'none');
+
+            createChatMessage(message,data.user,img,moment());
+			//left.fadeIn(1200);
+            scrollToBottom();
 		}
 
 		else if(status === "tooManyPeople") {
